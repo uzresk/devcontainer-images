@@ -1,0 +1,5 @@
+{
+  "name": "Azure Terraform",
+  "image": "devcontainer/terraform-azure:1.0.0",
+  "postStartCommand": "/root/post-start.sh"
+}
