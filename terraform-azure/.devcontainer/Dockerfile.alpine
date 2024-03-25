@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM mcr.microsoft.com/azure-cli:latest
 
 # check terraform version: https://www.terraform.io/downloads.html
 ARG TERRAFORM_VERSION=1.5.4
@@ -9,23 +9,8 @@ ARG TRIVY_VERSION=0.49.1
 # check aztfexport version: https://github.com/Azure/aztfexport/releases
 ARG AZTFEXPORT_VERSION=0.14.0
 
-RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-
-RUN apt-get update \
-  && apt-get -y install --reinstall ca-certificates \
-  && apt-get -y install --no-install-recommends \
-      curl \
-      unzip \
-      jq \
-      git \
-  && apt-get clean \
-  && rm -rf \
-    /var/lib/apt/lists/* \
-    /tmp/* \
-    /var/tmp/*
-
-# install azure cli
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN apk update \
+    && apk add --no-cache curl unzip ca-certificates bash jq git
 
 # install terraform, tflint, aztfexport
 RUN cd /usr/local/bin \
